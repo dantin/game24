@@ -15,7 +15,7 @@ bool game24( Card *card, int size )
    */
   if( size == 1 ) {
     if( fabs( card[0].value - TARGET ) < PRECISION ) {
-      printf( "%d found\n", TARGET );
+      printf( "%d = %s\n", TARGET, card[0].expression  );
       return true;
     } else {
       return false;
@@ -35,6 +35,7 @@ bool game24( Card *card, int size )
       for( i = 0; i < size; i++ ) {
 	if( i != m && i != n ) {
 	  stack[t].value = card[i].value;
+	  sprintf( stack[t].expression, "%s", card[i].expression );
 	  t++;
 	}
       }
@@ -42,6 +43,7 @@ bool game24( Card *card, int size )
        * 选中两张牌的和放入新牌堆
        */
       stack[size - 2].value = card[m].value + card[n].value;
+      sprintf( stack[size - 2].expression, "(%s + %s)", card[m].expression, card[n].expression );
       if( game24( stack, size - 1 ) ) {
 	return true;
       }
@@ -50,8 +52,10 @@ bool game24( Card *card, int size )
        */
       if( card[m].value > card[n].value ) {
 	stack[size - 2].value = card[m].value - card[n].value;
+	sprintf( stack[size - 2].expression, "(%s - %s)", card[m].expression, card[n].expression );
       } else {
 	stack[size - 2].value = card[n].value - card[m].value;
+	sprintf( stack[size - 2].expression, "(%s - %s)", card[n].expression, card[m].expression );
       }
       if( game24( stack, size - 1 ) ) {
 	return true;
@@ -60,6 +64,7 @@ bool game24( Card *card, int size )
        * 选中两张牌的积放入新牌堆
        */
       stack[size - 2].value = card[m].value * card[n].value;
+      sprintf( stack[size - 2].expression, "%s * %s", card[m].expression, card[n].expression );
       if( game24( stack, size - 1 ) ) {
 	return true;
       }
@@ -68,12 +73,14 @@ bool game24( Card *card, int size )
        */
       if( card[m].value != 0 ) {
 	stack[size - 2].value = card[n].value / card[m].value;
+	sprintf( stack[size - 2].expression, "%s / %s", card[n].expression, card[m].expression );
 	if( game24( stack, size - 1 ) ) {
 	  return true;
 	}
       }
       if( card[n].value != 0 ) {
 	stack[size - 2].value = card[m].value / card[n].value;
+	sprintf( stack[size - 2].expression, "%s / %s", card[m].expression, card[n].expression );
 	if( game24( stack, size - 1 ) ) {
 	  return true;
 	}

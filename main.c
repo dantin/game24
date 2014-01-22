@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include "game24.h"
 
 int main( void )
@@ -9,6 +10,7 @@ int main( void )
   for( i = 0; i < SIZE; i++ ) {
     scanf( "%d", &poke );
     card[i].value = ( double )poke;
+    sprintf( card[i].expression, "%d", poke );
   }
 
   if( game24( card, SIZE ) ) {

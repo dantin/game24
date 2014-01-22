@@ -5,9 +5,13 @@
 
 #define SIZE 4
 
+/*
+ * 最终表达式由四个数、括号、运算符组成，其大小不会超过
+ *    5 * ( SIZE - 1 ) + SIZE * 2 + 1
+ */
 typedef struct {
   double value;
-  char *expression;
+  char expression[ 5 * ( SIZE - 1 ) + SIZE * 2 + 1 ];
 } Card;
 
 /*
